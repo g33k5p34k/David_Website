@@ -1,39 +1,35 @@
 ---
 # Display name
-title: Nelson Bighetti
+title: David JX Tan
 
 # Is this the primary user of the site?
 superuser: true
 
 # Role/position/tagline
-role: Professor of Artificial Intelligence
+role: PhD Student
 
 # Organizations/Affiliations to show in About widget
 organizations:
-- name: Stanford University
-  url: https://www.stanford.edu/
+- name: University of New Mexico
+  url: https://www.andersenlabunm.org/people
+- name: Museum of Southwestern Biology
+  url: http://www.msb.unm.edu/
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include distributed robotics, mobile computing and programmable matter.
+bio: My research focuses on the biogeography and evolution of Southeast Asian birds, as well as the ecological interactions between birds and other taxa (e.g. parasites). 
 
 # Interests to show in About widget
 interests:
-- Artificial Intelligence
-- Computational Linguistics
-- Information Retrieval
+- Island Biogeography
+- Avian Evolution
+- Landscape Genomics
 
 # Education to show in About widget
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
-    year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
+  - course: BSc (Hons) in Life Sciences, specialisation in Environmental Biology
+    institution: National University of Singapore
+    year: 2015
 
 # Social/Academic Networking
 # For available icons, see: https://wowchemy.com/docs/getting-started/page-builder/#icons
@@ -45,23 +41,20 @@ social:
   link: '/#contact'
 - icon: twitter
   icon_pack: fab
-  link: https://twitter.com/GeorgeCushen
+  link: https://twitter.com/g33k5p34k
 - icon: graduation-cap  # Alternatively, use `google-scholar` icon from `ai` icon pack
   icon_pack: fas
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
+  link: https://scholar.google.com/citations?user=G0qY3P4AAAAJ&hl=en
 - icon: github
   icon_pack: fab
-  link: https://github.com/gcushen
-- icon: linkedin
-  icon_pack: fab
-  link: https://www.linkedin.com/
+  link: https://github.com/g33k5p34k
 
 # Link to a PDF of your resume/CV.
 # To use: copy your resume to `static/uploads/resume.pdf`, enable `ai` icons in `params.toml`, 
 # and uncomment the lines below.
-# - icon: cv
-#   icon_pack: ai
-#   link: uploads/resume.pdf
+# - icon: download
+#   icon_pack: fab
+#   link: 'CV_DavidTan_UpdatedMar2022.pdf'
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
 email: ""
@@ -70,8 +63,10 @@ email: ""
 highlight_name: true
 ---
 
-Nelson Bighetti is a professor of artificial intelligence at the Stanford AI Lab. His research interests include distributed robotics, mobile computing and programmable matter. He leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+David Tan is an avian ecologist and evolutionary biologist whose research focuses primarily on the biogeography, evolution, and conservation of the birds of Southeast Asia. He is particularly interested in the drivers and inhibitors of diversification in island systems, and how gene flow between proximate and distant populations affect the speciation process. Much of his work centres around integrating the use of natural history collections, vouchered tissue samples, geospatial datasets, and modern genomic techniques.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+He also studies the factors influencing bird-building collisions in Southeast Asia, and is interested in exploring the ecological and co-evolutionary interactions between birds and other taxa, especially between birds and their ectoparasites.
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/demo_resume.pdf" "newtab" >}}resumé{{< /staticref >}}.
+David is currently a PhD student with the Andersen Lab at the University of New Mexico and the Museum of Southwestern Biology.
+
+{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/CV_DavidTan_UpdatedMar2022.pdf" "newtab" >}}curriculum vitae{{< /staticref >}}.
