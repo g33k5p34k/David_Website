@@ -124,4 +124,4 @@ If you’ve read this far, here are a few things to note about Puerto Rico:
 2. Food service in Puerto Rico is generally slow, so unless you’re cooking your own food, expect mealtimes to drag on for a bit. 
 3. Mountain roads are extremely narrow, and there is quite a fair amount of reckless driving going on in Puerto Rico, so be sure to take extra care when driving, especially high up in the mountains. 
 4. Per-site species richness appears to be relatively low despite the tropical locality of Puerto Rico, so don’t be overly disappointed with individual checklists hovering around the 15-20 species range. 
-5. Don’t expect to see any terrestrial mammals other than bats and humans. 
+5. Don’t expect to see any terrestrial mammals other than bats, humans, and livestock. 
