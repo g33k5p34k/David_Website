@@ -1,3 +1,9 @@
+---
+title: PleistoDist Overview
+date: 2022-03-30
+type: book
+---
+
 # PleistoDist
 Island shape and distance metrics, normalised over Pleistocene time. A complete ground-up rebuild of PleistoDist for use with R. 
 
