@@ -116,12 +116,12 @@ plot(x = euclideandist, y = gendist/(1-gendist),xlab="Euclidean Distance",ylab="
 As such, distance-based redundancy analyses may be more reliable for assessing the correlation between genetic and geographic distance. Interestingly, the dbRDA results indicate that both the least shore-to-shore and centroid-to-centroid distance matrices show highly significant correlations with genetic distance (p = 0.00661 and 0.007043, respectively), while Euclidean distance shows a somewhat significant correlation with genetic distance (p = 0.034779). Further model selection suggests that the centroid-to-centroid distance results in the best model fit to the data. This suggests that the genetic divergence patterns in *Amphiacusta sanctaecrucis* populations over the last 20,000 years are likely structured by broad-scale isolation-by-distance driven by inter-island overwater dispersal, rather than by land bridge-constrained dispersal. Although the results of this reanalysis need further validation, they nonetheless highlight the utility of time-normalised distance matrices for testing different hypotheses of dispersal across tropical island archipelagoes. 
 
 | Distance Type | Mantel $R^2$ | Mantel p-value | dbRDA $R^2_{adj}$ | dbRDA p-value |
-|:--------------|:-------------|:---------------|:---------------------|:--------------|
-Euclidean Distance | 0.228273 | 0.0521429 | 0.3509484 | 0.034779
-Least Cost Distance | 0.2203824 | 0.0521409 | 0.1387593 | 0.3025617
-Least Shore-to-shore Distance | 0.0426482 | 0.1997118 | 0.4736347 | 0.00661
-Centroid-to-centroid Distance | 0.0090014 | 0.2004748 | 0.5933486 | 0.007043
-Mean Shore-to-shore Distance | 0.0035279 | 0.2976187 | -0.4337182 | 0.9366181
+|:-----------------------|:-------------|:---------------|:---------------------|:--------------|
+| Euclidean Distance | 0.228273 | 0.0521429 | 0.3509484 | 0.034779 |
+| Least Cost Distance | 0.2203824 | 0.0521409 | 0.1387593 | 0.3025617 |
+| Least Shore-to-shore Distance | 0.0426482 | 0.1997118 | 0.4736347 | 0.00661 |
+| Centroid-to-centroid Distance | 0.0090014 | 0.2004748 | 0.5933486 | 0.007043 |
+| Mean Shore-to-shore Distance | 0.0035279 | 0.2976187 | -0.4337182 | 0.9366181 |
 
 ```{r message = FALSE, warning = FALSE, eval=FALSE}
 #model selection
