@@ -1,6 +1,6 @@
 ---
 # Display name
-title: David JX Tan
+title: David JX Tan (陈健雄)
 
 # Is this the primary user of the site?
 superuser: true
@@ -63,10 +63,10 @@ email: ""
 highlight_name: true
 ---
 
-David Tan is an avian ecologist and evolutionary biologist whose research focuses primarily on the biogeography, evolution, and conservation of the birds of Southeast Asia. He is particularly interested in the drivers and inhibitors of diversification in island systems, and how gene flow between proximate and distant populations affect the speciation process. Much of his work centres around integrating the use of natural history collections, vouchered tissue samples, geospatial datasets, and modern genomic techniques.
+I am an avian ecologist and evolutionary biologist whose research focuses primarily on the biogeography, evolution, and conservation of the birds of Southeast Asia. I am particularly interested in the drivers and inhibitors of diversification in island systems, and how gene flow between proximate and distant populations affect the speciation process. Much of my work centres around integrating the use of natural history collections, vouchered tissue samples, geospatial datasets, and modern genomic techniques.
 
-He also studies the factors influencing bird-building collisions in Southeast Asia, and is interested in exploring the ecological and co-evolutionary interactions between birds and other taxa, especially between birds and their ectoparasites.
+I also study the factors influencing bird-building collisions in Southeast Asia, and am interested in exploring the ecological and co-evolutionary interactions between birds and other taxa, especially between birds and their ectoparasites.
 
-David is currently a PhD student with the Andersen Lab at the University of New Mexico and the Museum of Southwestern Biology.
+I am currently a PhD student with the Andersen Lab at the University of New Mexico and the Museum of Southwestern Biology.
 
 {{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/CV_DavidTan_UpdatedMar2022.pdf" "newtab" >}}curriculum vitae{{< /staticref >}}.
