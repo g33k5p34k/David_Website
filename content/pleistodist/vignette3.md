@@ -9,7 +9,7 @@ toc: false
 
 One of the predictions of the Theory of Island Biogeography (MacArthur & Wilson, 1967) is that the relative rate of migration between island pairs can be predicted by the size, relative orientation, and distance of the source islands. Gyllenhaal et al (2020) test this expectation by estimating the rates of inter-island migration in the Fiji Bush Warbler (*Horornis ruficapilla*) between four large islands across the Fijian archipelago, concluding that rates of inter-island migration are consistent with the neutral expectations of MacArthur & Wilson. This neutral expectation can now be easily calculated using PleistoDist, while taking into account the effect of sea level change over Pleistocene time. 
 
-The first step in this analysis is to download bathymetry data for the area of interest. For this vignette, we will be downloading a bathymetric map of the Fijian archipelago from the Generalised Bathymetric Chart of the Oceans (GEBCO). 
+The first step in this analysis is to download bathymetry data for the area of interest. For this vignette, we will be downloading a bathymetric map of the Fijian archipelago from the Generalised Bathymetric Chart of the Oceans (GEBCO: https://www.gebco.net/). 
 
 ![](/pleistodist/Fiji_GEBCO.png)
 We will also need to generate the interval file, which converts sea level change into a series of discrete intervals. In this analysis, we will use a time cutoff of 115 kya, corresponding with the start of the last glacial period, for 40 sea level depth intervals. Once the interval file has been generated, we can use the `makemaps()` function to generate maps of island extents over time. 

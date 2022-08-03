@@ -9,7 +9,7 @@ toc: false
 
 Papadopoulou & Knowles (2015) studied the effects of Pleistocene-era island connectivity on the genetic differentiation patterns of Carribbean flightless cricket (*Amphiacusta sanctaecrucis*) populations in the Virgin Islands, and found that population divergence times broadly correlate with a period of fluctuating sea levels and inter-island land bridge connections (~75-115 kya). In addition, the study found that all Virgin Island populations appear to exhibit a pattern of isolation-by-distance, with the exception of populations from St. Croix, athough these analyes were based on present-day Euclidean distances between populations. Using PleistoDist, it is possible to replicate the landscape genetic analyses, but with geographical distance matrices that account for sea level change over time.
 
-To generate maps of sea level change over time, we first need to obtain a bathymetry map of the area of interest. In this vignette, we will use data from the GEBCO database. In order to accurately estimate the sizes and distances of islands during periods of low sea level, it is important that the bathymetry map encompass as much of the local shelf as possible. 
+To generate maps of sea level change over time, we first need to obtain a bathymetry map of the area of interest. In this vignette, we will use data from the GEBCO database (https://www.gebco.net/). In order to accurately estimate the sizes and distances of islands during periods of low sea level, it is important that the bathymetry map encompass as much of the local shelf as possible. 
 
 ![Download bathymetry map of Puerto Rico and the Virgin Islands from the GEBCO website](/pleistodist/gebco_download.png)
 

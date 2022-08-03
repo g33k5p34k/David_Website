@@ -9,7 +9,7 @@ toc: false
 
 Hammoud et al (2021) examined the relationship between island area and species richness in the Aegean Islands across multiple plant and animal taxa, taking into account historical sea level change over the Quaternary. They find that land-bridge islands, which were historically connected to the mainland, exhibit weaker correlations between island area and endemic species richness relative to true islands, which were never connected with the mainland. The results of this study suggest that periodic land bridge formation between islands and the mainland may inhibit the differentiation of insular populations. For the sake of this vignette, however, we will only be looking at species-area relationships for angiosperms on true islands in the Aegean archipelago. 
 
-First, we need to download bathymetry data for the Aegean Islands. For this vignette, we will use data from the Generalised Bathymetric Chart of the Oceans (GEBCO)
+First, we need to download bathymetry data for the Aegean Islands. For this vignette, we will use data from the Generalised Bathymetric Chart of the Oceans (GEBCO: https://www.gebco.net/)
 
 ![](/pleistodist/AegeanSea_GEBCO.png)
 
