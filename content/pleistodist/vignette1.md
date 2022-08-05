@@ -21,11 +21,11 @@ library(dplyr)
 library(PleistoDist)
 library(vegan)
 
-#generate interval file, with a time cutoff of 20 kya, and 20 time intervals
-getintervals_time(20,20)
+#generate interval file, with a time cutoff of 20 kya and 20 time intervals, using default sea level reconstruction from Bintanja & Van der Waal (2008)
+getintervals_time(time = 20,intervals = 20,outdir = "outfolder", sealvl = bintanja_vandewal_2008)
 
-#generate map files using default sea level reconstruction from Bintanja & Van der Waal (2008)
-makemaps("VirginIslands.asc", epsg = 32161)
+#generate map files 
+makemaps(inputraster = "VirginIslands.asc", epsg = 32161, intervalfile = "outfolder/intervals.csv", offset = 0)
 ```
 
 To visualise how the island system has changed over time as a result of sea level change, we can use the magick package in R to create an animated GIF file. 
@@ -33,7 +33,7 @@ To visualise how the island system has changed over time as a result of sea leve
 library(magick)
 library(purrr)
 library(gtools)
-mixedsort(list.files(path="output/raster_flat/",pattern="*.tif",full.names=T)) %>% 
+mixedsort(list.files(path="outfolder/raster_flat/",pattern="*.tif",full.names=T)) %>% 
   map(image_read) %>% 
   image_join() %>% 
   image_animate(fps=2) %>% 
@@ -50,11 +50,11 @@ We can now use PleistDist to calculate various inter-island distance estimates. 
 
 ```{r message = FALSE, warning = FALSE, eval=FALSE}
 #generate geographical distance matrices
-pleistodist_euclidean("Amphiacusta_points.shp", epsg = 32161)
-pleistodist_leastcost("Amphiacusta_points.shp", epsg = 32161)
-pleistodist_leastshore("Amphiacusta_points.shp", epsg = 32161)
-pleistodist_centroid("Amphiacusta_points.shp", epsg = 32161)
-pleistodist_meanshore("Amphiacusta_points.shp", epsg = 32161)
+pleistodist_euclidean(points = "Amphiacusta_points.shp", epsg = 32161, outdir = "outfolder")
+pleistodist_leastcost(points = "Amphiacusta_points.shp", epsg = 32161, intervalfile = "outfolder/intervals.csv", mapdir = "outfolder", outdir = "outfolder")
+pleistodist_leastshore(points = "Amphiacusta_points.shp", epsg = 32161, intervalfile = "outfolder/intervals.csv, mapdir = "outfolder, outdir = "outfolder")
+pleistodist_centroid(points = "Amphiacusta_points.shp", epsg = 32161, intervalfile = "outfolder/intervals.csv, mapdir = "outfolder, outdir = "outfolder")
+pleistodist_meanshore(points = "Amphiacusta_points.shp", epsg = 32161, intervalfile = "outfolder/intervals.csv, mapdir = "outfolder, outdir = "outfolder", maxsamp = 1000)
 ```
 
 After calculating the geographical distance matrices, we can run Mantel tests and distance-based redundancy analyses (dbRDA) to assess the correlation between genetic distance and different forms of geographic distance estimation. 
@@ -66,23 +66,23 @@ gendist <- read.csv("FST.csv") %>%
   spaa::list2dist()
 
 #load and reshape geographic distance matrices to wide format
-euclideandist <- read.csv("output/island_euclideandist.csv") %>%
+euclideandist <- read.csv("outfolder/island_euclideandist.csv") %>%
   dplyr::select(Island1,Island2,interval0) %>%
   spaa::list2dist()
 
-leastcostdist <- read.csv("output/island_leastcostdist.csv") %>%
+leastcostdist <- read.csv("outfolder/island_leastcostdist.csv") %>%
   dplyr::select(Island1,Island2,mean) %>%
   spaa::list2dist()
 
-leastshoredist <- read.csv("output/island_leastshoredist.csv") %>%
+leastshoredist <- read.csv("outfolder/island_leastshoredist.csv") %>%
   dplyr::select(Island1,Island2,mean) %>%
   spaa::list2dist()
 
-centroiddist <- read.csv("output/island_centroiddist.csv") %>%
+centroiddist <- read.csv("outfolder/island_centroiddist.csv") %>%
   dplyr::select(Island1,Island2,mean) %>%
   spaa::list2dist()
 
-meanshoredist1 <- read.csv("output/island_meanshoredist.csv") %>%
+meanshoredist1 <- read.csv("outfolder/island_meanshoredist.csv") %>%
   dplyr::select(Island1,Island2,mean) %>%
   reshape(direction = "wide",idvar = "Island2",timevar = "Island1")
 

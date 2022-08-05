@@ -16,10 +16,10 @@ We will also need to generate the interval file, which converts sea level change
 
 ```{r message=FALSE, warning=FALSE,eval=FALSE}
 #generate interval file for cutoff time of 115 kya (onset of last glacial period), for 40 sea level depth intervals
-getintervals_sealvl(115,40)
+getintervals_sealvl(time = 115, intervals = 40, outdir = "output", sealvl = bintanja_vandewal_2008)
 
 #generate maps of island extents
-makemaps("Fiji.asc",3141)
+makemaps(inputraster = "Fiji.asc", epsg = 3141, intervalfile = "output/intervals.csv", outdir = "output", offset = 0)
 ```
 
 We can use the R package magick to stitch the maps of island extent into an animation of sea level change over time. Note that because we generated intervals by sea level depth, this animation is not in chronological order. 
@@ -44,9 +44,9 @@ Once all that has been set up, we can proceed to run the net migration function 
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 #calculate net inter-island migration over time
-pleistodist_netmig("Horornis_points.shp",3141,"centroid")
-pleistodist_netmig("Horornis_points.shp",3141,"leastshore")
-pleistodist_netmig("Horornis_points.shp",3141,"meanshore")
+pleistodist_netmig(points = "Horornis_points.shp", epsg = 3141, disttype = "centroid")
+pleistodist_netmig(points = "Horornis_points.shp", epsg = 3141, disttype = "leastshore")
+pleistodist_netmig(points = "Horornis_points.shp", epsg = 3141, disttype = "meanshore")
 ```
 
 Now we can run some simple analyses to compare the empirical estimates of inter-island gene flow with the PleistoDist-generated expectations. 

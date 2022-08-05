@@ -67,6 +67,6 @@ I am an avian ecologist and evolutionary biologist whose research focuses primar
 
 I also study the factors influencing bird-building collisions in Southeast Asia, and am interested in exploring the ecological and co-evolutionary interactions between birds and other taxa, especially between birds and their ectoparasites.
 
-I am currently a PhD student with the Andersen Lab at the University of New Mexico and the Museum of Southwestern Biology.
+I am currently a PhD candidate with the Andersen Lab at the University of New Mexico and the Museum of Southwestern Biology.
 
 {{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/CV_DavidTan_UpdatedMar2022.pdf" "newtab" >}}curriculum vitae{{< /staticref >}}.
