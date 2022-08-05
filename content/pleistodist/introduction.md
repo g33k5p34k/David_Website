@@ -2,7 +2,6 @@
 title: PleistoDist Basics
 date: 2022-08-03
 type: book
-toc: false
 ---
 
 # Using PleistoDist
