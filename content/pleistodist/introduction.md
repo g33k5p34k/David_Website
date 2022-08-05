@@ -50,6 +50,8 @@ testpoints_proj <- st_transform(testpoints,3141)
 write_sf(testpoints_proj,paste0(path,"/testpoints.shp"))
 ```
 
+Note that because the shapefile of points used in this example does not have a 'Name' column, all PleistoDist outputs will use the FID value of each point by default. You can, however, modify the shapefile's attribute table to include a 'Name' column, which PleistoDist will use instead of FID values. 
+
 ## Generate interval file and maps
 
 Now that the working environment has been set up, we can proceed with using PleistoDist to generate the interval file as well as the maps of island extents. For this analysis, we will be setting a cutoff time of 20 kya (the approximate time of the the last glacial maximum), for 10 time bin intervals, using the default sea-level reconstruction by Bintanja and Van de Wal (2008). We will also assume no net uplift or subsidence of the archipelago when generating the island maps (i.e. the offset parameter in the `makemaps()` function will be set to 0). All output files are automatically saved to the specified output folder (parameter: outdir). 
@@ -135,7 +137,7 @@ pleistodist_leastcost(points = paste0(path,"/testpoints.shp"),
 
 ## Calculate inter-island net migration and inter-island visibility
 
-PleistoDist also contains two higher-level functions that estimate the ratio of migrants exchanged between a pair of islands (based on a model by MacArthur and Wilson (1967)) as well as the estimated visibility of a destination island relative to an observer located on a source island. As with all other functions in PleistoDist, all outputs from these functions will be saved in CSV format in the directory specified by the 'outdir' parameter. 
+PleistoDist also contains two higher-level functions that (1) estimate the ratio of migrants exchanged between a pair of islands (`pleistodist_netmig()`; based on a model by MacArthur and Wilson (1967)) as well as (2) the estimated visibility of a destination island relative to an observer located on a source island (`pleistodist_visibility()`). As with all other functions in PleistoDist, all outputs from these functions will be saved in CSV format in the directory specified by the 'outdir' parameter. 
 
 ```{r}
 #calculate net inter-island migration
@@ -155,6 +157,9 @@ pleistodist_visiblity(points = paste0(path,"/testpoints.shp"),
                       height = 10, #default 0
                       plotfigs = TRUE) #false by default. User will be prompted to confirm if number of points exceeds 5
 ```
+The `pleistodist_visibility()` function can also plot maps of inter-island visibility if the 'plotfigs' parameter is set to TRUE. Users are warned, however, not to activate this parameter if the number of points is high, since PleistoDist may end up generating a large number of graphics files (e.g. an analysis with 5 points and 10 intervals will generate up to a theoretical maximum of 250 image files). Below is an example of what a visibility map looks like:
+
+![Visibility of Vanua Levu from Nacula, for interval 9](/pleistodist/visibilitymap_0_2_interval9.png)
 
 ## References
 
