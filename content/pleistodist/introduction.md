@@ -148,7 +148,7 @@ pleistodist_netmig(points = paste0(path,"/testpoints.shp"),
                    outdir = path)
 
 #calculate inter-island visbility
-pleistodist_visiblity(points = paste0(path,"/testpoints.shp"),
+pleistodist_visibility(points = paste0(path,"/testpoints.shp"),
                       epsg = 3141,
                       intervalfile = paste0(path,"/intervals.csv"),
                       mapdir = path,
