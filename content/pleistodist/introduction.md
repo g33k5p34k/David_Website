@@ -15,13 +15,14 @@ Before we begin our analysis, we first have to set up our working environment an
 ```{r}
 library(sf)
 library(terra)
+library(raster)
 library(PleistoDist)
 
 #set temporary working directory 
 path <- file.path(tempdir())
 
 #load path to bathymetry file (this is included in the PleistoDist package)
-fiji <- system.file("extdata","FJ.asc",package=PleistoDist,mustwork=TRUE)
+fiji <- system.file("extdata","FJ.asc",package="PleistoDist")
 
 #create shapefile of 3 points, one on each island of interest
 testpoints <- st_multipoint(rbind(c(177.43035,-16.88739), #Nacula
@@ -60,7 +61,7 @@ Now that the working environment has been set up, we can proceed with using Plei
 getintervals_sealvl(time = 20,
                     intervals = 10,
                     outdir = path,
-                    sealvl = bintanja_vandewal_2008) #optional, default bintanja_vandewal_2008
+                    sealvl = PleistoDist:::bintanja_vandewal_2008) #optional, default bintanja_vandewal_2008
 
 #create maps
 makemaps(inputraster = fiji,
