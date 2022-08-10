@@ -38,7 +38,7 @@ mixedsort(list.files(path="output/raster_flat/",pattern="*.tif",full.names=T)) %
 
 ![](/pleistodist/aegeanislands_animated.gif)
 
-We need to generate a shapefile of sampling points for calculating island area over time. To do this, we will use the 'Add Delimited Text Layer' function in QGIS to read the `Aegean_Angiosperms.csv` file, rename the 'Islands' colume to 'Name', and filter for rows where `typelgm == I` (filtering out islands that were previously connected to the mainland). 
+We need to generate a shapefile of sampling points for calculating island area over time. To do this, we will use the 'Add Delimited Text Layer' function in QGIS to read the `Aegean_Angiosperms.csv` file from the Hammoud et al (2021) Dryad dataset (https://datadryad.org/stash/dataset/doi:10.5061/dryad.dfn2z350z), rename the 'Islands' colume to 'Name', and filter for rows where `typelgm == I` (filtering out islands that were previously connected to the mainland). 
 
 ![](/pleistodist/QGIS_points.png)
 
@@ -121,5 +121,6 @@ ggarrange(areaplot,surfaceareaplot,ncol=2,nrow=1)
 
 ## References
 
+* Hammoud C. 2021. Past connections with the mainland structure patterns of insular species richness in a continental-shelf archipelago (Aegean Sea, Greece): Species richness matrixes and shapefiles. Dryad. Dataset. https://doi.org/10.5061/dryad.dfn2z350z
 * Hammoud C, Kougioumoutzis K, Rijsdijk KF, Simaiakis SM, Norder SJ, Foufopoulos J, Georgopoulou E, Loon EE. 2021. Past connections with the mainland structure patterns of insular species richness in a continental‐shelf archipelago (Aegean Sea, Greece). Ecol. Evol. [Internet] 11:5441–5458. Available from: http://dx.doi.org/10.1002/ece3.7438
 * Simaiakis SM, Rijsdijk KF, Koene EFM, Norder SJ, Van Boxel JH, Stocchi P, Hammoud C, Kougioumoutzis K, Georgopoulou E, Van Loon EE, Tjørve KMC, Tjørve E. 2017. Geographic changes in the Aegean Sea since the Last Glacial Maximum: Postulating biogeographic effects of sea-level rise on islands. Palaeogeogr. Palaeoclimatol. Palaeoecol. 471:108–119. 
