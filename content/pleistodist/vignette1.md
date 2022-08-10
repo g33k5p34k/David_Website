@@ -57,7 +57,7 @@ pleistodist_centroid(points = "Amphiacusta_points.shp", epsg = 32161, intervalfi
 pleistodist_meanshore(points = "Amphiacusta_points.shp", epsg = 32161, intervalfile = "outfolder/intervals.csv, mapdir = "outfolder, outdir = "outfolder", maxsamp = 1000)
 ```
 
-After calculating the geographical distance matrices, we can run Mantel tests and distance-based redundancy analyses (dbRDA) to assess the correlation between genetic distance and different forms of geographic distance estimation. FST values for these analyses can be obtained from the bottom diagonal of Table S3 in the Supplementary Material of Papadopoulou and Knowles (2015). 
+After calculating the geographical distance matrices, we can run Mantel tests and distance-based redundancy analyses (dbRDA) to assess the correlation between genetic distance and different forms of geographic distance estimation. $F_{ST}$ values for these analyses can be obtained from the bottom diagonal of Table S3 in the Supplementary Material of Papadopoulou and Knowles (2015). 
 
 ```{r}
 #load FST distance matrix
