@@ -49,7 +49,7 @@ pleistodist_netmig(points = "Horornis_points.shp", epsg = 3141, disttype = "leas
 pleistodist_netmig(points = "Horornis_points.shp", epsg = 3141, disttype = "meanshore")
 ```
 
-Now we can run some simple analyses to compare the empirical estimates of inter-island gene flow with the PleistoDist-generated expectations. 
+Now we can run some simple analyses to compare the empirical estimates of inter-island gene flow (obtained from the associated GitHub repository: https://github.com/ethangyllenhaal/horornis_UCE/blob/master/R_scripts/horornis_geneflow_comp.csv) with the PleistoDist-generated expectations. 
 
 ```{r eval=FALSE}
 #load interval file for calculating parameter standard deviation, extract time durations of each interval as weights
