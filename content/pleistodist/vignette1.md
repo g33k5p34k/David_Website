@@ -9,11 +9,18 @@ toc: false
 
 Papadopoulou & Knowles (2015) studied the effects of Pleistocene-era island connectivity on the genetic differentiation patterns of Carribbean flightless cricket (*Amphiacusta sanctaecrucis*) populations in the Virgin Islands, and found that population divergence times broadly correlate with a period of fluctuating sea levels and inter-island land bridge connections (~75-115 kya). In addition, the study found that all Virgin Island populations appear to exhibit a pattern of isolation-by-distance, with the exception of populations from St. Croix, athough these analyes were based on present-day Euclidean distances between populations. Using PleistoDist, it is possible to replicate the landscape genetic analyses, but with geographical distance matrices that account for sea level change over time.
 
+For the purposes of this vignette, we will be reading and writing all files from a temporary directory, which we will assign to the variable called 'temp' with the following code:
+
+```{r message=FALSE, warning=FALSE}
+#generate temporary directory
+temp <- file.path(tempdir())
+```
+
 To generate maps of sea level change over time, we first need to obtain a bathymetry map of the area of interest. In this vignette, we will use data from the GEBCO database (https://www.gebco.net/). In order to accurately estimate the sizes and distances of islands during periods of low sea level, it is important that the bathymetry map encompass as much of the local shelf as possible. 
 
 ![Download bathymetry map of Puerto Rico and the Virgin Islands from the GEBCO website](/pleistodist/gebco_download.png)
 
-Once we have the bathymetry data downloaded, we can proceed to with generating the interval file as well as maps of island extents over time. To account for the most recently diverged island population on St. Croix, we set a time cutoff at 20 kya, at a maximum temporal resolution of 20 time intervals. 
+Once we have the bathymetry data downloaded and saved to the temporary directory as the file "VirginIslands.asc", we can proceed to with generating the interval file as well as maps of island extents over time. To account for the most recently diverged island population on St. Croix, we set a time cutoff at 20 kya, at a maximum temporal resolution of 20 time intervals. 
 
 ```{r message=FALSE, warning=FALSE}
 library(spaa)
@@ -22,10 +29,10 @@ library(PleistoDist)
 library(vegan)
 
 #generate interval file, with a time cutoff of 20 kya and 20 time intervals, using default sea level reconstruction from Bintanja & Van der Waal (2008)
-getintervals_time(time = 20,intervals = 20,outdir = "outfolder", sealvl = bintanja_vandewal_2008)
+getintervals_time(time = 20,intervals = 20,outdir = temp, sealvl = PleistoDist:::bintanja_vandewal_2008)
 
 #generate map files 
-makemaps(inputraster = "VirginIslands.asc", epsg = 32161, intervalfile = "outfolder/intervals.csv", offset = 0)
+makemaps(inputraster = paste0(temp,"/VirginIslands.asc"), epsg = 32161, intervalfile = paste0(temp,"/intervals.csv"), offset = 0)
 ```
 
 To visualise how the island system has changed over time as a result of sea level change, we can use the magick package in R to create an animated GIF file. 
@@ -33,7 +40,7 @@ To visualise how the island system has changed over time as a result of sea leve
 library(magick)
 library(purrr)
 library(gtools)
-mixedsort(list.files(path="outfolder/raster_flat/",pattern="*.tif",full.names=T)) %>% 
+mixedsort(list.files(path=paste0(temp,"/raster_flat/"),pattern="*.tif",full.names=T)) %>% 
   map(image_read) %>% 
   image_join() %>% 
   image_animate(fps=2) %>% 
@@ -42,7 +49,7 @@ mixedsort(list.files(path="outfolder/raster_flat/",pattern="*.tif",full.names=T)
 
 ![Animated GIF of sea level change over the last 20,000 years for Puerto Rico and the Virgin Islands](/pleistodist/virginislands_animated.gif)
 
-Now that the interval file and island maps have been generated, we need to generate a shapefile of points corresponding to our sampling localities. You can do this by importing a CSV file of coordinates into QGIS using the "Add Delimited Text Layer" function and exporting the file using the "Save Features As..." function. Remember to add a "Name" column with unique identifiers to the data table for each sampling point. 
+Now that the interval file and island maps have been generated, we need to generate a shapefile of points corresponding to our sampling localities. You can do this by importing a CSV file of coordinates into QGIS using the "Add Delimited Text Layer" function and exporting the file to the 'tmp' directory using the "Save Features As..." function. Remember to add a "Name" column with unique identifiers to the data table for each sampling point. 
 
 ![](/pleistodist/QGIS_ImportPoints.png)
 
@@ -50,39 +57,39 @@ We can now use PleistDist to calculate various inter-island distance estimates. 
 
 ```{r message = FALSE, warning = FALSE, eval=FALSE}
 #generate geographical distance matrices
-pleistodist_euclidean(points = "Amphiacusta_points.shp", epsg = 32161, outdir = "outfolder")
-pleistodist_leastcost(points = "Amphiacusta_points.shp", epsg = 32161, intervalfile = "outfolder/intervals.csv", mapdir = "outfolder", outdir = "outfolder")
-pleistodist_leastshore(points = "Amphiacusta_points.shp", epsg = 32161, intervalfile = "outfolder/intervals.csv, mapdir = "outfolder, outdir = "outfolder")
-pleistodist_centroid(points = "Amphiacusta_points.shp", epsg = 32161, intervalfile = "outfolder/intervals.csv, mapdir = "outfolder, outdir = "outfolder")
-pleistodist_meanshore(points = "Amphiacusta_points.shp", epsg = 32161, intervalfile = "outfolder/intervals.csv, mapdir = "outfolder, outdir = "outfolder", maxsamp = 1000)
+pleistodist_euclidean(points = paste0(tmp,"/Amphiacusta_points.shp"), epsg = 32161, outdir = tmp)
+pleistodist_leastcost(points = paste0(tmp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(tmp,"/intervals.csv"), mapdir = tmp, outdir = tmp)
+pleistodist_leastshore(points = paste0(tmp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(tmp,"/intervals.csv"), mapdir = tmp, outdir = tmp)
+pleistodist_centroid(points = paste0(tmp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(tmp,"/intervals.csv"), mapdir = tmp, outdir = tmp)
+pleistodist_meanshore(points = paste0(tmp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(tmp,"/intervals.csv"), mapdir = tmp, outdir = tmp, maxsamp = 1000)
 ```
 
 After calculating the geographical distance matrices, we can run Mantel tests and distance-based redundancy analyses (dbRDA) to assess the correlation between genetic distance and different forms of geographic distance estimation. $F_{ST}$ values for these analyses can be obtained from the bottom diagonal of Table S3 in the Supplementary Material of Papadopoulou and Knowles (2015). 
 
 ```{r}
 #load FST distance matrix
-gendist <- read.csv("FST.csv") %>%
+gendist <- read.csv(padte0(tmp,"/FST.csv")) %>%
   dplyr::select(Island1,Island2,FST) %>%
   spaa::list2dist()
 
 #load and reshape geographic distance matrices to wide format
-euclideandist <- read.csv("outfolder/island_euclideandist.csv") %>%
+euclideandist <- read.csv(paste0(tmp,"/island_euclideandist.csv")) %>%
   dplyr::select(Island1,Island2,interval0) %>%
   spaa::list2dist()
 
-leastcostdist <- read.csv("outfolder/island_leastcostdist.csv") %>%
+leastcostdist <- read.csv(paste0(tmp,"/island_leastcostdist.csv")) %>%
   dplyr::select(Island1,Island2,mean) %>%
   spaa::list2dist()
 
-leastshoredist <- read.csv("outfolder/island_leastshoredist.csv") %>%
+leastshoredist <- read.csv(paste0(tmp,"/island_leastshoredist.csv")) %>%
   dplyr::select(Island1,Island2,mean) %>%
   spaa::list2dist()
 
-centroiddist <- read.csv("outfolder/island_centroiddist.csv") %>%
+centroiddist <- read.csv(paste0(tmp,"/island_centroiddist.csv")) %>%
   dplyr::select(Island1,Island2,mean) %>%
   spaa::list2dist()
 
-meanshoredist1 <- read.csv("outfolder/island_meanshoredist.csv") %>%
+meanshoredist1 <- read.csv(paste0(tmp,"/island_meanshoredist.csv")) %>%
   dplyr::select(Island1,Island2,mean) %>%
   reshape(direction = "wide",idvar = "Island2",timevar = "Island1")
 
