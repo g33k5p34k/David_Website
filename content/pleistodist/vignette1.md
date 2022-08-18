@@ -49,7 +49,7 @@ mixedsort(list.files(path=paste0(temp,"/raster_flat/"),pattern="*.tif",full.name
 
 ![Animated GIF of sea level change over the last 20,000 years for Puerto Rico and the Virgin Islands](/pleistodist/virginislands_animated.gif)
 
-Now that the interval file and island maps have been generated, we need to generate a shapefile of points corresponding to our sampling localities. You can do this by importing a CSV file of coordinates into QGIS using the "Add Delimited Text Layer" function and exporting the file to the 'tmp' directory using the "Save Features As..." function. Remember to add a "Name" column with unique identifiers to the data table for each sampling point. 
+Now that the interval file and island maps have been generated, we need to generate a shapefile of points corresponding to our sampling localities. You can do this by importing a CSV file of coordinates into QGIS using the "Add Delimited Text Layer" function and exporting the file to the 'temp' directory using the "Save Features As..." function. Remember to add a "Name" column with unique identifiers to the data table for each sampling point. 
 
 ![](/pleistodist/QGIS_ImportPoints.png)
 
@@ -57,39 +57,39 @@ We can now use PleistDist to calculate various inter-island distance estimates. 
 
 ```{r message = FALSE, warning = FALSE, eval=FALSE}
 #generate geographical distance matrices
-pleistodist_euclidean(points = paste0(tmp,"/Amphiacusta_points.shp"), epsg = 32161, outdir = tmp)
-pleistodist_leastcost(points = paste0(tmp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(tmp,"/intervals.csv"), mapdir = tmp, outdir = tmp)
-pleistodist_leastshore(points = paste0(tmp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(tmp,"/intervals.csv"), mapdir = tmp, outdir = tmp)
-pleistodist_centroid(points = paste0(tmp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(tmp,"/intervals.csv"), mapdir = tmp, outdir = tmp)
-pleistodist_meanshore(points = paste0(tmp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(tmp,"/intervals.csv"), mapdir = tmp, outdir = tmp, maxsamp = 1000)
+pleistodist_euclidean(points = paste0(temp,"/Amphiacusta_points.shp"), epsg = 32161, outdir = temp)
+pleistodist_leastcost(points = paste0(temp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(temp,"/intervals.csv"), mapdir = temp, outdir = temp)
+pleistodist_leastshore(points = paste0(temp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(temp,"/intervals.csv"), mapdir = temp, outdir = temp)
+pleistodist_centroid(points = paste0(temp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(temp,"/intervals.csv"), mapdir = temp, outdir = temp)
+pleistodist_meanshore(points = paste0(temp,"/Amphiacusta_points.shp"), epsg = 32161, intervalfile = paste0(temp,"/intervals.csv"), mapdir = temp, outdir = temp, maxsamp = 1000)
 ```
 
 After calculating the geographical distance matrices, we can run Mantel tests and distance-based redundancy analyses (dbRDA) to assess the correlation between genetic distance and different forms of geographic distance estimation. $F_{ST}$ values for these analyses can be obtained from the bottom diagonal of Table S3 in the Supplementary Material of Papadopoulou and Knowles (2015). 
 
 ```{r}
 #load FST distance matrix
-gendist <- read.csv(padte0(tmp,"/FST.csv")) %>%
+gendist <- read.csv(padte0(temp,"/FST.csv")) %>%
   dplyr::select(Island1,Island2,FST) %>%
   spaa::list2dist()
 
 #load and reshape geographic distance matrices to wide format
-euclideandist <- read.csv(paste0(tmp,"/island_euclideandist.csv")) %>%
+euclideandist <- read.csv(paste0(temp,"/island_euclideandist.csv")) %>%
   dplyr::select(Island1,Island2,interval0) %>%
   spaa::list2dist()
 
-leastcostdist <- read.csv(paste0(tmp,"/island_leastcostdist.csv")) %>%
+leastcostdist <- read.csv(paste0(temp,"/island_leastcostdist.csv")) %>%
   dplyr::select(Island1,Island2,mean) %>%
   spaa::list2dist()
 
-leastshoredist <- read.csv(paste0(tmp,"/island_leastshoredist.csv")) %>%
+leastshoredist <- read.csv(paste0(temp,"/island_leastshoredist.csv")) %>%
   dplyr::select(Island1,Island2,mean) %>%
   spaa::list2dist()
 
-centroiddist <- read.csv(paste0(tmp,"/island_centroiddist.csv")) %>%
+centroiddist <- read.csv(paste0(temp,"/island_centroiddist.csv")) %>%
   dplyr::select(Island1,Island2,mean) %>%
   spaa::list2dist()
 
-meanshoredist1 <- read.csv(paste0(tmp,"/island_meanshoredist.csv")) %>%
+meanshoredist1 <- read.csv(paste0(temp,"/island_meanshoredist.csv")) %>%
   dplyr::select(Island1,Island2,mean) %>%
   reshape(direction = "wide",idvar = "Island2",timevar = "Island1")
 
