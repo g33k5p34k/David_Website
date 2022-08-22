@@ -68,7 +68,7 @@ After calculating the geographical distance matrices, we can run Mantel tests an
 
 ```{r}
 #load FST distance matrix
-gendist <- read.csv(padte0(temp,"/FST.csv")) %>%
+gendist <- read.csv(paste0(temp,"/FST.csv")) %>%
   dplyr::select(Island1,Island2,FST) %>%
   spaa::list2dist()
 
