@@ -44,7 +44,7 @@ mixedsort(list.files(path=paste0(temp,"/raster_flat/"),pattern="*.tif",full.name
   map(image_read) %>% 
   image_join() %>% 
   image_animate(fps=2) %>% 
-  image_write("virginislands_animated.gif")
+  image_write(paste0(temp,"/virginislands_animated.gif"))
 ```
 
 ![Animated GIF of sea level change over the last 20,000 years for Puerto Rico and the Virgin Islands](/pleistodist/virginislands_animated.gif)

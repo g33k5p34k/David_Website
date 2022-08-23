@@ -9,6 +9,13 @@ toc: false
 
 One of the predictions of the Theory of Island Biogeography (MacArthur & Wilson, 1967) is that the relative rate of migration between island pairs can be predicted by the size, relative orientation, and distance of the source islands. Gyllenhaal et al (2020) test this expectation by estimating the rates of inter-island migration in the Fiji Bush Warbler (*Horornis ruficapilla*) between four large islands across the Fijian archipelago, concluding that rates of inter-island migration are consistent with the neutral expectations of MacArthur & Wilson. This neutral expectation can now be easily calculated using PleistoDist, while taking into account the effect of sea level change over Pleistocene time. 
 
+For the purposes of this vignette, we will be reading and writing all files from a temporary directory, which we will assign to the variable called 'temp' with the following code:
+
+```{r message=FALSE, warning=FALSE}
+#generate temporary directory
+temp <- file.path(tempdir())
+```
+
 The first step in this analysis is to download bathymetry data for the area of interest. For this vignette, we will be downloading a bathymetric map of the Fijian archipelago from the Generalised Bathymetric Chart of the Oceans (GEBCO: https://www.gebco.net/). 
 
 ![](/pleistodist/Fiji_GEBCO.png)
@@ -16,10 +23,10 @@ We will also need to generate the interval file, which converts sea level change
 
 ```{r message=FALSE, warning=FALSE,eval=FALSE}
 #generate interval file for cutoff time of 115 kya (onset of last glacial period), for 40 sea level depth intervals
-getintervals_sealvl(time = 115, intervals = 40, outdir = "output", sealvl = bintanja_vandewal_2008)
+getintervals_sealvl(time = 115, intervals = 40, outdir = temp, sealvl = PleistoDist:::bintanja_vandewal_2008)
 
 #generate maps of island extents
-makemaps(inputraster = "Fiji.asc", epsg = 3141, intervalfile = "output/intervals.csv", outdir = "output", offset = 0)
+makemaps(inputraster = paste0(temp,"/Fiji.asc"), epsg = 3141, intervalfile = paste0(temp,"/intervals.csv"), outdir = temp, offset = 0)
 ```
 
 We can use the R package magick to stitch the maps of island extent into an animation of sea level change over time. Note that because we generated intervals by sea level depth, this animation is not in chronological order. 
@@ -28,11 +35,11 @@ We can use the R package magick to stitch the maps of island extent into an anim
 library(magick)
 library(purrr)
 library(gtools)
-mixedsort(list.files(path="output/raster_flat/",pattern="*.tif",full.names=T)) %>% 
+mixedsort(list.files(path=paste0(temp,"/raster_flat/"),pattern="*.tif",full.names=T)) %>% 
   map(image_read) %>% 
   image_join() %>% 
   image_animate(fps=2) %>% 
-  image_write("fiji_animated.gif")
+  image_write(paste0(temp,"/fiji_animated.gif"))
 ```
 
 ![](/pleistodist/fiji_animated.gif)
@@ -44,20 +51,20 @@ Once all that has been set up, we can proceed to run the net migration function 
 
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 #calculate net inter-island migration over time
-pleistodist_netmig(points = "Horornis_points.shp", epsg = 3141, disttype = "centroid")
-pleistodist_netmig(points = "Horornis_points.shp", epsg = 3141, disttype = "leastshore")
-pleistodist_netmig(points = "Horornis_points.shp", epsg = 3141, disttype = "meanshore")
+pleistodist_netmig(points = paste0(temp,"/Horornis_points.shp"), epsg = 3141, disttype = "centroid", intervalfile = paste0(temp,"/intervals.csv"), mapdir = temp, outdir = temp)
+pleistodist_netmig(points = paste0(temp,"/Horornis_points.shp"), epsg = 3141, disttype = "leastshore", intervalfile = paste0(temp,"/intervals.csv"), mapdir = temp, outdir = temp)
+pleistodist_netmig(points = paste0(temp,"/Horornis_points.shp"), epsg = 3141, disttype = "meanshore", intervalfile = paste0(temp,"/intervals.csv"), mapdir = temp, outdir = temp)
 ```
 
 Now we can run some simple analyses to compare the empirical estimates of inter-island gene flow (obtained from the associated GitHub repository: https://github.com/ethangyllenhaal/horornis_UCE/blob/master/R_scripts/horornis_geneflow_comp.csv) with the PleistoDist-generated expectations. 
 
 ```{r eval=FALSE}
 #load interval file for calculating parameter standard deviation, extract time durations of each interval as weights
-intervalfile <- read.csv("output/intervals.csv")
+intervalfile <- read.csv(paste0(temp,"/intervals.csv"))
 wts <- intervalfile$TimeInterval
 
 #load net migration estimates, calculate the weighted standard deviation for the mean, and import empirical data
-netmig_centroid <- read.csv("output/island_netmigration_centroid.csv") %>%
+netmig_centroid <- read.csv(paste0(temp,"/island_netmigration_centroid.csv")) %>%
   drop_na() %>% 
   rowwise() %>%
   mutate(stdev = sqrt(wtd.var(c_across(interval0:interval40),wts))) %>%
@@ -65,7 +72,7 @@ netmig_centroid <- read.csv("output/island_netmigration_centroid.csv") %>%
   mutate(upp = mean + qt(0.975,df=sum(wts)-1)*stdev/sqrt(sum(wts))) %>%
   dplyr::select(Island1,Island2,mean,stdev,low,upp) %>%
   mutate(Method = "Centroid (115 kya)")
-netmig_leastshore <- read.csv("output/island_netmigration_leastshore.csv") %>%
+netmig_leastshore <- read.csv(paste0(temp,"/island_netmigration_leastshore.csv")) %>%
   drop_na() %>% 
   rowwise() %>%
   mutate(stdev = sqrt(wtd.var(c_across(interval0:interval40),wts))) %>%
@@ -73,7 +80,7 @@ netmig_leastshore <- read.csv("output/island_netmigration_leastshore.csv") %>%
   mutate(upp = mean + qt(0.975,df=sum(wts)-1)*stdev/sqrt(sum(wts))) %>%
   dplyr::select(Island1,Island2,mean,stdev,low,upp) %>%
   mutate(Method = "LeastShore (115 kya)")
-netmig_meanshore <- read.csv("output/island_netmigration_meanshore.csv") %>%
+netmig_meanshore <- read.csv(paste0(temp,"/island_netmigration_meanshore.csv")) %>%
   drop_na() %>% 
   rowwise() %>%
   mutate(stdev = sqrt(wtd.var(c_across(interval0:interval40),wts))) %>%
@@ -81,17 +88,17 @@ netmig_meanshore <- read.csv("output/island_netmigration_meanshore.csv") %>%
   mutate(upp = mean + qt(0.975,df=sum(wts)-1)*stdev/sqrt(sum(wts))) %>%
   dplyr::select(Island1,Island2,mean,stdev,low,upp) %>%
   mutate(Method = "MeanShore (115 kya)")
-netmig_centroid_presentday <- read.csv("output/island_netmigration_centroid.csv") %>%
+netmig_centroid_presentday <- read.csv(paste0(temp,"/island_netmigration_centroid.csv")) %>%
   dplyr::select(Island1,Island2,interval0) %>%
   rename(mean = interval0) %>%
   drop_na() %>%
   mutate(stdev=0,low=mean,upp=mean,Method="Centroid (Present Day)")
-netmig_leastshore_presentday <- read.csv("output/island_netmigration_leastshore.csv") %>%
+netmig_leastshore_presentday <- read.csv(paste0(temp,"/island_netmigration_leastshore.csv")) %>%
   dplyr::select(Island1,Island2,interval0) %>%
   rename(mean = interval0) %>%
   drop_na() %>%
   mutate(stdev=0,low=mean,upp=mean,Method="LeastShore (Present Day)")
-netmig_meanshore_presentday <- read.csv("output/island_netmigration_meanshore.csv") %>%
+netmig_meanshore_presentday <- read.csv(paste0(temp,"/island_netmigration_meanshore.csv")) %>%
   dplyr::select(Island1,Island2,interval0) %>%
   rename(mean = interval0) %>%
   drop_na() %>%
