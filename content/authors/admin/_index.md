@@ -69,4 +69,4 @@ I also study the factors influencing bird-building collisions in Southeast Asia,
 
 I am currently a PhD candidate with the Andersen Lab at the University of New Mexico and the Museum of Southwestern Biology.
 
-{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/CV_DavidTan_UpdatedMar2022.pdf" "newtab" >}}curriculum vitae{{< /staticref >}}.
+{{< icon name="download" pack="fas" >}} Download my {{< staticref "uploads/CV_DavidTan_2025.pdf" "newtab" >}}curriculum vitae{{< /staticref >}}.
